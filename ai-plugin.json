@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Niviloop-GPT Tasks",
+  "name_for_model": "niviloopNotion",
+  "description_for_human": "Létrehozza és kezeli a feladatokat a Notion adatbázisodban.",
+  "description_for_model": "Használható új feladatok létrehozására, státusz, határidő és leírás megadásával a Notion adatbázisban (ID: c494179bbce240f9a103410ef854af2d).",
+  "auth": {
+    "type": "bearer",
+    "authorization_type": "header",
+    "verification_tokens": {}
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://rg191.github.io/niviloop-gpt-api/openapi.yaml"
+  },
+  "logo_url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg",
+  "contact_email": "niviloop@example.com",
+  "legal_info_url": "https://www.notion.so"
+}
