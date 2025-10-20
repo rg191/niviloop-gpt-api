@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Niviloop-GPT Notion Integration
+  description: |
+    Ez az API lehetővé teszi, hogy a ChatGPT automatikusan új feladatokat hozzon létre a Notion adatbázisban (ID: `c494179bbce240f9a103410ef854af2d`), 
+    amely a Niviloop-GPT integrációhoz van csatlakoztatva.  
+    A feladatokhoz megadható: név, státusz, határidő és részletes leírás.
+  version: 1.1.0
+servers:
+  - url: https://api.notion.com/v1
+    description: Notion API fő végpont
+paths:
+  /pages:
+    post:
+      operationId: createNotionTask
+      summary: Új feladat létrehozása a Niviloop-GPT Notion adatbázisban.
+      description: Létrehoz egy új feladatot a Notion adatbázisban, megadott névvel, leírással, határidővel és státusszal.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parent:
+                  type: object
+                  properties:
+                    database_id:
+                      type: string
+                      example: c494179bbce240f9a103410ef854af2d
+                properties:
+                  type: object
+                  properties:
+                    Name:
+                      type: object
+                      description: A feladat címe.
+                      properties:
+                        title:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              text:
+                                type: object
+                                properties:
+                                  content:
+                                    type: string
+                      required:
+                        - title
+                    Leírás:
+                      type: object
+                      description: A feladat részletes leírása vagy megjegyzése.
+                      properties:
+                        rich_text:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              text:
+                                type: object
+                                properties:
+                                  content:
+                                    type: string
+                    Status:
+                      type: object
+                      description: A feladat státusza (pl. "Folyamatban", "Kész").
+                      properties:
+                        select:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                    Határidő:
+                      type: object
+                      description: A feladat határideje (ISO dátumformátumban, pl. 2025-10-21).
+                      properties:
+                        date:
+                          type: object
+                          properties:
+                            start:
+                              type: string
+                              format: date
+              required:
+                - parent
+                - properties
+      responses:
+        '200':
+          description: A feladat sikeresen létrejött a Notionben.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  url:
+                    type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: notion
